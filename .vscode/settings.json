@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "getspeed.C": "cpp"
+        "getspeed.C": "cpp",
+        "test.C": "cpp",
+        "calculs.C": "cpp"
     }
 }
