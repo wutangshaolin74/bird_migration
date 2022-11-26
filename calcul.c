@@ -57,14 +57,23 @@ double sumofforce(struct vitesse * currentspeed, struct vitesse * currentwind){
 
 
 // a function that return the orientation for the next hour 
-double orientationfor1(struct vitesse * currentspeed,struct speed * currentwind,double summofforce){
+void orientationfor1(struct vitesse * currentspeed,struct speed * currentwind,double summofforce, double * actualorientation ){
     if (currentspeed->vitessey+ currentwind->vitessey)<0 {
-        double orientationtoreturn = 2 * M_1_PI - acos((currentspeed->vitessex+currentwind->vitessex)/summofforce);}  // voir avec leo pk il rajoute une random value
+        *actualorientation = 2 * M_1_PI - acos((currentspeed->vitessex+currentwind->vitessex)/summofforce);}  // voir avec leo pk il rajoute une random value
     elif(currentspeed->vitessey+ currentwind->vitessey)>0 {
-        double orientationtoreturn = acos((currentspeed->vitessex+currentspeed->vitessex)/sumofforce);}
+        *actualorientation = acos((currentspeed->vitessex+currentspeed->vitessex)/sumofforce);}
     else{
-        if ((currentspeed->vitessex+currentwind->vitessex)>0) {}
+        if ((currentspeed->vitessex+currentwind->vitessex)>0) { *actualorientation=0 }
+        elif ((currentspeed->vitessex+currentwind->vitessex)>0)  { *actualorientation=M_1_PI }
+        else {
+            printf("there is an error in the orientation of the bird");
+        }
+    }    }
 
-    }
-    }
+void vectorofdeisplacement(struct point * currentposition, struct point * finalposition, double * radiustobird, double * vectorofdisplacement){
+    double angletogetdistance = pow(sin((finalposition->latitude-currentposition->latitude)/2),2)+ cos(finalposition->longtiude)*cos(currentposition->longtiude)*pow(sin((finalposition->longtiude-currentposition->longtiude)/2),2);
+    *vectorofdeisplacement= *radiustobird * atan2(sqrt(angletogetdistance),sqrt(1-angletogetdistance));}
 
+double birdtrajctory(struct meteo * caseMeteo, struct vitesse * currentspeed, struct point * currentposition, struct point * finalposition, struct point * initialposition, double * birdresistance, char * nameofthefile) {
+    
+} 
