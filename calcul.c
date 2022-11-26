@@ -63,7 +63,8 @@ double orientationfor1(struct vitesse * currentspeed,struct speed * currentwind,
     elif(currentspeed->vitessey+ currentwind->vitessey)>0 {
         double orientationtoreturn = acos((currentspeed->vitessex+currentspeed->vitessex)/sumofforce);}
     else{
-        if 
+        if ((currentspeed->vitessex+currentwind->vitessex)>0) {}
+
     }
     }
 
