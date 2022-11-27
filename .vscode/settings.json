@@ -2,6 +2,12 @@
     "files.associations": {
         "getspeed.C": "cpp",
         "test.C": "cpp",
-        "calculs.C": "cpp"
-    }
+        "calculs.C": "cpp",
+        "modelintelligentbird.C": "cpp",
+        "tes2t.C": "cpp",
+        "oiseauintelligent.C": "cpp",
+        "oiseabete.C": "cpp",
+        "teeeeest2.C": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
