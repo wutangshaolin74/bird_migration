@@ -1,3 +1,15 @@
+
+#include <unistd.h>
+#include <stdio.h>
+#include <math.h>
+#include <inttypes.h>
+#include <stdlib.h>
+#include <time.h>
+#include <json-c/json.h>
+#include <string.h>
+
+
+
 void fillWindMap(struct caseMeteo * caseMeteo){
 
   for (int y = 0; y < 10; y++) {
@@ -58,4 +70,11 @@ void fillWindMap(struct caseMeteo * caseMeteo){
       }
 
   }
+}
+
+int main(int argc, char const *argv[]) {
+
+struct caseMeteo * caseMeteo = malloc(96 * 720 * sizeof(struct caseMeteo));
+
+fillWindMap(caseMeteo);
 }
