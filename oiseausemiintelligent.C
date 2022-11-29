@@ -15,6 +15,8 @@ struct speed{
     double vitessex;
     double vitessey;
 }
+
+//the structure of the informations of the wind for 1 hour
 struct wind {
     double normeofthespeed;
     double angleofthewind;
@@ -25,36 +27,36 @@ double convertdegreesintorad(double angleindegrees){
     double angleindegrees = angleindegrees * 2*M_1_PI /360;
     return angleindegrees;}
 
+//if we had to convert angle in the reference of the trigonometric (the angle 0 is 90 degrees decalated)
 double convertcompassintorad(angleincompass){
     double angleinrad = 2 * M_1_PI - convertdegreesintorad(angleincompass-90);
     angleinrad = mod(angleinrad, 2 * M_1_PI);}
 
 
-// function that find the alpha angle between the actual position and the final position
+// function that find the alpha angle between the actual position and the final position (by using trigonometry)
 double direction( struct point * currentposition, struct point * finalposition,  double sizeofasquare){
     double a = (finalposition->longtiude - currentposition->longtiude) * sizeofasquare ;
     double b = (finalposition->latitude - currentposition->latitude) * sizeofasquare;
     double alphaangle = atan2(a/b);
     return alphaangle;}
 
-// function that decompose the speed vector of the bird into the x and y component
+// function that decompose the speed vector of the bird into the x and y component (by using trigonometry)
 void speedbird(double alphaangle, double speedbird, struct speed * currentbirdspeed ){
     currentbirdspeed->vitessex= sin(alphaangle)* speedbird;
     currentbirdspeed->vitessey = cos(alphaangle) * speedbird;
 }
 
 
-// function that decom^pse the speed vector of the wind into the x and y component
+// function that decom^pse the speed vector of the wind into the x and y component (by using trigonometry)
 void speedwind(double speedwind, struct speed * currentwindspeed,double windirection){
     currentwindspedd->vitessex= sin(convertdegreesintorad(windirection))* speedwind;
     currentwindspedd->vitessey= cos(convertdegreesintorad(windirection))* speedwind;
 }
 
-// function that calculate the speed along the x and y component and that takes the ponderation of the wind
+// function that calculate the speed along the x and y component and that takes the ponderation of the wind (it takes the wind and the bird speed and direction and return the final speed vector that would be use by the bird)
 void realbirdspeed(struct speed * currentwindspeedwind, struct speed * currentspeedbird, struct speed * realbirdspeed, double facteurimpactation ){
     realbirdspeed->vitessex= (currentspeedbird->vitessex + facteurimpactation * currentwindspeedwind->vitessex)/(facteurimpactation+1);
     realbirdspeed->vitessey= (currentspeedbird->vitessey + facteurimpactation * currentwindspeedwind->vitessey)/(facteurimpactation+1);
-    
 }
 // function that calculate the displacement of the bird and that actualize his position 
 void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, double siezofasquare, struct point * currentposition){
@@ -62,21 +64,23 @@ void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, doubl
     double distanceiny = realbirdspeed->vitessey * tempsparcours;
     double latparcourue = distanceiny /siezofasquare;
     double longparcourue = distanceinx/ siezofasquare;
-    currentposition->latitude=currentposition->latitude+  latparcourue;
-    currentposition->longtiude = currentposition->longtiude + longparcourue; 
+    *currentposition->latitude=*currentposition->latitude+  latparcourue;
+    *currentposition->longtiude = *currentposition->longtiude + longparcourue; 
 }
 
 
-// function that calculate if the bird has arrival 
+// function that calculate if the bird has arrival (we initialize one square were the bird must be in order to consider that he has arrived)
 double isthebirdarrival(struct point  * currentposition, struct point * finalposition,double sizeofasquare){
-    double margeofarrival = 40000/ sizeofasquare;
+    double margeofarrival = 20000/ sizeofasquare;
     double latmin= finalposition->latitude - margeofarrival;
     double latmax= finalposition->latitude - margeofarrival;
     double longmin= finalposition->longtiude- margeofarrival;
     double longmax= finalposition->longtiude - margeofarrival;
-    if (latmin<currentposition->latitude<latmax && longmin<currentposition->longtiude<longmax){
+    if (latmin<*currentposition->latitude<latmax && longmin<*currentposition->longtiude<longmax){
         printf("The bird is arrival in");
-        printf("The latitude an longitude of the bird are , %.6f and , %.6f",currentposition->latitude,currentposition->longtiude);   
+        printf("The latitude an longitude of the bird are , %.6f and , %.6f",currentposition->latitude,currentposition->longtiude); 
+        return 1;  
+    return 0;
     }}
 
 
@@ -99,20 +103,20 @@ double deplacement(struct point * currentposition, struct point * positionfin, d
         double b=speedbird(a,birdspeed,* currentbirdspeed);
         
 
-    //Écriture de la position [i] dans le .csv
-    fprintf (fichier, "%f,", currentposition->latitude);
-    fprintf(fichier, "%f,", currentposition->longtiude);
-    fprintf(fichier, "%f\n", realbirdspeed->vitessex);
-    fprintf(fichier, "%f\n", realbirdspeed->vitessey);
+        
+        
+        
+        //Écriture de la position [i] dans le .csv
+        fprintf (fichier, "%f,", currentposition->latitude);
+        fprintf(fichier, "%f,", currentposition->longtiude);
+        fprintf(fichier, "%f\n", realbirdspeed->vitessex);
+        fprintf(fichier, "%f\n", realbirdspeed->vitessey);
 
-    }
+    }}
 
-    }
+
+
 int main(int argc, char const *argv[]) {
-   struct point * points[2000];
-    struct speed * speeds[2000]; 
-
-
-
 }
+
 
