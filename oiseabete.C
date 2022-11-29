@@ -15,11 +15,19 @@ struct speed{
     double vitessex;
     double vitessey;
 }
+struct wind {
+    double normeofthespeed;
+    double angleofthewind;
+}
 
 // function to converge angle in degrees into radian
-double convertdegressintorad(double angleindegrees){
+double convertdegreesintorad(double angleindegrees){
     double angleindegrees = angleindegrees * 2*M_1_PI /360;
     return angleindegrees;}
+
+double convertcompassintorad(angleincompass){
+    double angleinrad = 2 * M_1_PI - convertdegreesintorad(angleincompass-90);
+    angleinrad = mod(angleinrad, 2 * M_1_PI);}
 
 
 // function that find the alpha angle between the actual position and the final position
@@ -31,15 +39,15 @@ double direction( struct point * currentposition, struct point * finalposition, 
 
 // function that decompose the speed vector of the bird into the x and y component
 void speedbird(double alphaangle, double speedbird, struct speed * currentbirdspeed ){
-    currentbirdspeed->vitessex= sin(convertdegreesintorad(alphaangle))* speedbird;
-    currentbirdspeed->vitessey = cos(convertdegressintorad(alphaangle)) * speedbird;
+    currentbirdspeed->vitessex= sin(alphaangle)* speedbird;
+    currentbirdspeed->vitessey = cos(alphaangle) * speedbird;
 }
 
 
 // function that decom^pse the speed vector of the wind into the x and y component
 void speedwind(double speedwind, struct speed * currentwindspeed,double windirection){
-    currentwindspedd->vitessex= sin(convertdegressintorad(windirection))* speedwind;
-    currentwindspedd->vitessey= cos(convertdegressintorad(windirection))* speedwind;
+    currentwindspedd->vitessex= sin(convertdegreesintorad(windirection))* speedwind;
+    currentwindspedd->vitessey= cos(convertdegreesintorad(windirection))* speedwind;
 }
 
 // function that calculate the speed along the x and y component and that takes the ponderation of the wind
@@ -52,8 +60,8 @@ void realbirdspeed(struct speed * currentwindspeedwind, struct speed * currentsp
 void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, double siezofasquare, struct point * currentposition){
     double distanceinx = realbirdspeed->vitessex * tempsparcours;
     double distanceiny = realbirdspeed->vitessey * tempsparcours;
-    double latparcourue = distanceinx /siezofasquare;
-    double longparcourue = distanceiny/ siezofasquare;
+    double latparcourue = distanceiny /siezofasquare;
+    double longparcourue = distanceinx/ siezofasquare;
     currentposition->latitude=currentposition->latitude+  latparcourue;
     currentposition->longtiude = currentposition->longtiude + longparcourue; 
 }
@@ -61,7 +69,7 @@ void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, doubl
 
 // function that calculate if the bird has arrival 
 double isthebirdarrival(struct point  * currentposition, struct point * finalposition,double sizeofasquare){
-    double margeofarrival = 10000/ sizeofasquare;
+    double margeofarrival = 40000/ sizeofasquare;
     double latmin= finalposition->latitude - margeofarrival;
     double latmax= finalposition->latitude - margeofarrival;
     double longmin= finalposition->longtiude- margeofarrival;
@@ -70,3 +78,41 @@ double isthebirdarrival(struct point  * currentposition, struct point * finalpos
         printf("The bird is arrival in");
         printf("The latitude an longitude of the bird are , %.6f and , %.6f",currentposition->latitude,currentposition->longtiude);   
     }}
+
+
+double deplacement(struct point * currentposition, struct point * positionfin, double birdspeed, struct casemeteo * casemeteo,double sizeofasquare, struct speed * currentbirdspeed){ 
+    //Création du fichier CSV BirdPosition et écriture du header
+    //char csv[] = ".csv";
+    //char* file_name = strcat(filename, csv);
+    FILE * filename = fopen (filename, "w");
+    if (filename == NULL) {
+        printf("Impossible d'ouvrir le fichier à écrire.\n");
+        }
+    fprintf (filename "%s,", "lat");
+    fprintf (filename, "%s,", "long");
+    fprintf (filename, "%s\n", "speedx");
+    fprintf (filename, "%s\n", "speedx");
+
+    double i =1;
+    while i==1{
+        double a=direction(*currentposition,*positionfin,sizeofasquare);
+        double b=speedbird(a,birdspeed,* currentbirdspeed);
+        
+
+    //Écriture de la position [i] dans le .csv
+    fprintf (fichier, "%f,", currentposition->latitude);
+    fprintf(fichier, "%f,", currentposition->longtiude);
+    fprintf(fichier, "%f\n", realbirdspeed->vitessex);
+    fprintf(fichier, "%f\n", realbirdspeed->vitessey);
+
+    }
+
+    }
+int main(int argc, char const *argv[]) {
+   struct point * points[2000];
+    struct speed * speeds[2000]; 
+
+
+
+}
+
