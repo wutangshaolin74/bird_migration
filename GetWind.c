@@ -68,13 +68,10 @@ void fillWindMap(struct caseMeteo * caseMeteo){
           }
 
       }
-
   }
 }
 
 int main(int argc, char const *argv[]) {
-
-struct caseMeteo * caseMeteo = malloc(96 * 720 * sizeof(struct caseMeteo));
-
-fillWindMap(caseMeteo);
+    struct caseMeteo * caseMeteo = malloc(96 * 720 * sizeof(struct caseMeteo));
+    fillWindMap(caseMeteo);
 }
