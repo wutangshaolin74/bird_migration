@@ -49,11 +49,11 @@ void realbirdspeed(struct speed * currentwindspeedwind, struct speed * currentsp
     
 }
 // function that calculate the displacement of the bird and that actualize his position 
-void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, double siezofasquare, struct point * currentposition){
+void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, double sizeofasquare, struct point * currentposition){
     double distanceinx = realbirdspeed->vitessex * tempsparcours;
     double distanceiny = realbirdspeed->vitessey * tempsparcours;
-    double latparcourue = distanceinx /siezofasquare;
-    double longparcourue = distanceiny/ siezofasquare;
+    double latparcourue = distanceinx /sizeofasquare;
+    double longparcourue = distanceiny/ sizeofasquare;
     currentposition->latitude=currentposition->latitude+  latparcourue;
     currentposition->longtiude = currentposition->longtiude + longparcourue; 
 }

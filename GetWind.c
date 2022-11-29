@@ -6,7 +6,7 @@
 #include <time.h>
 #include <json-c/json.h>
 #include <string.h>
-#include "migrations.h"
+
 
 void fillWindMap(struct caseMeteo * caseMeteo){
 
