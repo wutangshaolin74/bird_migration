@@ -141,6 +141,4 @@ void vectorofdeisplacement(struct point * currentposition, struct point * finalp
     double angletogetdistance = pow(sin((finalposition->latitude-currentposition->latitude)/2),2)+ cos(finalposition->longtiude)*cos(currentposition->longtiude)*pow(sin((finalposition->longtiude-currentposition->longtiude)/2),2);
     *vectorofdeisplacement= *radiustobird * atan2(sqrt(angletogetdistance),sqrt(1-angletogetdistance));}
 
-double birdtrajctory(struct meteo * caseMeteo, struct vitesse * currentspeed, struct point * currentposition, struct point * finalposition, struct point * initialposition, double * birdresistance, char * nameofthefile) {
-
-} 
+double birdtrajctory(struct meteo * caseMeteo, struct vitesse * currentspeed, struct point * currentposition, struct point * finalposition, struct point * initialposition, double * birdresistance, char * nameofthefile)

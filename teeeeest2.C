@@ -5,77 +5,30 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-// the structure of a point in the planisphere in degrees with latitude and longitude
-struct point  {
-    double latitude;
-    double longtiude;};
-// the structure of the two components of the speed in a cartesian repere
-struct speed{
+$struct speed{
     double vitessex;
     double vitessey;
-}
-
-// function to converge angle in degrees into radian
+};
 double convertdegreesintorad(double angleindegrees){
     double angleindegrees = angleindegrees * 2*M_1_PI /360;
     return angleindegrees;}
 
+//if we had to convert angle in the reference of the trigonometric (the angle 0 is 90 degrees decalated)
 double convertcompassintorad(angleincompass){
     double angleinrad = 2 * M_1_PI - convertdegreesintorad(angleincompass-90);
     angleinrad = mod(angleinrad, 2 * M_1_PI);}
 
 
-// function that find the alpha angle between the actual position and the final position
-double direction( struct point * currentposition, struct point * finalposition,  double sizeofasquare){
-    double a = (finalposition->longtiude - currentposition->longtiude) * sizeofasquare ;
-    double b = (finalposition->latitude - currentposition->latitude) * sizeofasquare;
-    double alphaangle = atan2(a/b);
-    return alphaangle;}
-
-// function that decompose the speed vector of the bird into the x and y component
-void speedbird(double alphaangle, double speedbird, struct speed * currentbirdspeed ){
-    currentbirdspeed->vitessex= sin(alphaangle)* speedbird;
-    currentbirdspeed->vitessey = cos(alphaangle) * speedbird;
-}
-
-
-// function that decom^pse the speed vector of the wind into the x and y component
 void speedwind(double speedwind, struct speed * currentwindspeed,double windirection){
-    currentwindspedd->vitessex= sin(convertdegreesintorad(windirection))* speedwind;
-    currentwindspedd->vitessey= cos(convertdegreesintorad(windirection))* speedwind;
+    currentwindspedd->vitessex= -sin(convertdegreesintorad(windirection))* speedwind;
+    currentwindspedd->vitessey= -cos(convertdegreesintorad(windirection))* speedwind;
 }
-
-// function that calculate the speed along the x and y component and that takes the ponderation of the wind
-void realbirdspeed(struct speed * currentwindspeedwind, struct speed * currentspeedbird, struct speed * realbirdspeed, double facteurimpactation ){
-    realbirdspeed->vitessex= (currentspeedbird->vitessex + facteurimpactation * currentwindspeedwind->vitessex)/(facteurimpactation+1);
-    realbirdspeed->vitessey= (currentspeedbird->vitessey + facteurimpactation * currentwindspeedwind->vitessey)/(facteurimpactation+1);
-    
-}
-// function that calculate the displacement of the bird and that actualize his position 
-void distanceparcourue(struct speed * realbirdspeed, double tempsparcours, double siezofasquare, struct point * currentposition){
-    double distanceinx = realbirdspeed->vitessex * tempsparcours;
-    double distanceiny = realbirdspeed->vitessey * tempsparcours;
-    double latparcourue = distanceinx /siezofasquare;
-    double longparcourue = distanceiny/ siezofasquare;
-    currentposition->latitude=currentposition->latitude+  latparcourue;
-    currentposition->longtiude = currentposition->longtiude + longparcourue; 
-}
-
-
-// function that calculate if the bird has arrival 
-double isthebirdarrival(struct point  * currentposition, struct point * finalposition,double sizeofasquare){
-    double margeofarrival = 10000/ sizeofasquare;
-    double latmin= finalposition->latitude - margeofarrival;
-    double latmax= finalposition->latitude - margeofarrival;
-    double longmin= finalposition->longtiude- margeofarrival;
-    double longmax= finalposition->longtiude - margeofarrival;
-    if (latmin<currentposition->latitude<latmax && longmin<currentposition->longtiude<longmax){
-        printf("The bird is arrival in");
-        printf("The latitude an longitude of the bird are , %.6f and , %.6f",currentposition->latitude,currentposition->longtiude);   
-    }}
 
 int main(int argc, char const *argv[]) {
-    
+    double speedwind = 1;
+    struct speed Ventvitesse = {0,0};
+    double winddirecetion= 315;
+    void(speedwind, *Ventvitesse, winddirecetion);
+    printf("vitesse x %.f vitesse y %.f", Ventvitesse->vitessex, Ventvitesse->vitessey);
+    return 1;
 }
-

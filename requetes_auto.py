@@ -1,3 +1,4 @@
+from fileinput import filename
 import urllib
 from urllib import parse, request
 import csv 
@@ -22,7 +23,7 @@ def GetUrl (lati, longi):
 def GetData (url, our_file) :
     answer = requests.get(url)
     if answer.ok :
-        with open ("MeteoData/" + file_name, "wb") as f :
+        with open ("MeteoData/" + filename, "wb") as f :
             f.write(answer.content)
 
     else : 

@@ -1,7 +1,11 @@
+#include <unistd.h>
 #include <stdio.h>
+#include <math.h>
+#include <inttypes.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h> 
+#include <time.h>
+
+
 struct vitesse1heure{
     double vteta;
     double vphi;};
@@ -24,26 +28,6 @@ double oiseaudisplacement (struct pointsph  * currentposition , struct vitesse1h
     return 1;}
 
 
-int readfile(char *filename, int length, double * point) {
-    /*
-    Reads in data file called "filename"
-    up to "length" number of rows
-    into an array of structures of struct TimeSeries called "conc".
-
-    Returns an integer corresponding to number of rows read in.
-    */
-
-    FILE *fid = fopen(filename, "r");
-    if(fid == NULL) return -1;
-
-    int n=0;    
-    char buffer[100];  
-    while (fgets(buffer, 100, fid) != NULL) {
-    if(n >= length) break;
-    sscanf(buffer, "%.6f",&point[n]);
-    n++;
-    }
-    return n;}
 
 
 

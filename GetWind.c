@@ -49,7 +49,7 @@ void fillWindMap(struct caseMeteo * caseMeteo){
               spe_windspeed = json_object_array_get_idx(wind_speed, i);
 
 
-              spe_winddirection = json_object_array_get_idx(wind_direction, i);
+              x = json_object_array_get_idx(wind_direction, i);
 
               caseMeteo[(y*8*720) + (x*720) + i].windspeed = json_object_get_double (json_object_array_get_idx(wind_speed, i));
               caseMeteo[(y*8*720) + (x*720) + i].winddirection = json_object_get_double (json_object_array_get_idx(wind_direction, i));
